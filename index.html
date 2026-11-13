@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><title>Thai Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#f6f4ef;--fg:#1d1d1b;--mut:#6b6a63;--cd:#fff;--bd:#ddd9cf;--ac:#0f6e56;--ok:#1b7a3d;--bad:#b3261e;--wr:#b07a00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17171a;--fg:#ecebe6;--mut:#a09f98;--cd:#222226;--bd:#3a3a40;--ac:#4cc3a0;--ok:#5fd28a;--bad:#ff8a80;--wr:#e6b84d}}
+:root[data-theme="dark"]{--bg:#17171a;--fg:#ecebe6;--mut:#a09f98;--cd:#222226;--bd:#3a3a40;--ac:#4cc3a0;--ok:#5fd28a;--bad:#ff8a80;--wr:#e6b84d}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,"Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif}
+header{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+header b{flex:1}
+main{max-width:720px;margin:0 auto;padding:14px 16px 40px}
+.btn{font:inherit;background:var(--cd);color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin:4px 0;width:100%;text-align:left;cursor:pointer}
+.btn.pri{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:600;text-align:center}
+.btn.s{width:auto;display:inline-block;margin:4px 6px 4px 0;padding:8px 12px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g .btn{margin:0}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:8px 0}
+.th{font-size:1.5em;line-height:1.7}.big{font-size:2.6em;text-align:center;line-height:1.6}
+small,.mut{color:var(--mut)}.q{font-size:1.2em;text-align:center;padding:10px}
+.ok{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 18%,var(--cd))!important}
+.bad{border-color:var(--bad)!important;background:color-mix(in srgb,var(--bad) 18%,var(--cd))!important}
+.chips{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border:1px dashed var(--bd);border-radius:12px;margin:8px 0}
+.chip{font-size:1.4em;padding:6px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--cd);cursor:pointer}
+.tk{display:inline-block;margin:0 3px;cursor:pointer;border-bottom:1px dotted var(--mut)}
+.tk small{display:block;font-size:.55em;line-height:1}
+.dot{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.8em;border:1px solid var(--bd)}
+.s-g{color:var(--ok);border-color:var(--ok)}.s-y{color:var(--wr);border-color:var(--wr)}
+#cv{width:100%;height:260px;border:1px solid var(--bd);border-radius:12px;background:var(--cd);touch-action:none;display:block;position:relative}
+.pad{position:relative}.gh{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:7em;opacity:.12;pointer-events:none}
+textarea{width:100%;box-sizing:border-box;min-height:90px;background:var(--cd);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:8px;font:13px monospace}
+#sh{position:fixed;left:0;right:0;bottom:0;background:var(--cd);border-top:1px solid var(--bd);padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));display:none;z-index:9}
+#ts{position:fixed;left:50%;transform:translateX(-50%);bottom:70px;background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:99px;display:none;z-index:10;font-size:.9em}
+</style></head><body>
+<header><button class="btn s" id="bk" style="margin:0">←</button><b id="t">Thai Hub</b></header>
+<main id="m"></main><div id="sh"></div><div id="ts"></div>
+<script>
+const BUILTIN=[{id:"u1",node:"Negasi, ได้ & modal",title:"Negasi, ได้, ยัง/แล้ว, ต้อง/อยาก",
+note:{f:"Mengatakan “tidak”, “bisa”, “sudah/belum”, “harus/ingin”, dan di mana posisinya terhadap kata kerja.",
+r:"<b>Sebelum kata kerja:</b> ไม่ (tidak), ไม่ได้ (tidak melakukan), ยัง (masih/belum), ต้อง (harus), อยาก (ingin), ได้ (sempat).<br><b>Sesudah kata kerja:</b> ได้ (bisa/boleh), ไม่ได้ (tidak bisa), ด้วยกัน, แล้ว (sudah).<br><b>Paling akhir:</b> ไหม (tanya).",
+c:"ไปได้ = bisa pergi · ได้ไป = sempat pergi<br>ไปไม่ได้ = tidak bisa pergi · ไม่ได้ไป = tidak (jadi) pergi"},
+cards:[{id:"a1",th:"ไม่",r:"mâi",m:"tidak"},{id:"a2",th:"ได้",r:"dâai",m:"bisa / boleh / sempat"},{id:"a3",th:"ไป",r:"bpai",m:"pergi"},{id:"a4",th:"กิน",r:"gin",m:"makan"},{id:"a5",th:"ข้าว",r:"kâao",m:"nasi"},{id:"a6",th:"ฉัน",r:"chǎn",m:"aku"},{id:"a7",th:"ยัง",r:"yang",m:"masih / belum"},{id:"a8",th:"แล้ว",r:"láew",m:"sudah"},{id:"a9",th:"ต้อง",r:"dtɔ̂ɔng",m:"harus"},{id:"a10",th:"อยาก",r:"yàak",m:"ingin"},{id:"a11",th:"เพื่อน",r:"pʉ̂an",m:"teman"},{id:"a12",th:"ด้วยกัน",r:"dûuai-gan",m:"bersama"},{id:"a13",th:"ไหม",r:"mǎi",m:"(partikel tanya ya/tidak)"},{id:"a14",th:"กับ",r:"gàp",m:"dengan"},{id:"a15",th:"ถาม",r:"tǎam",m:"bertanya"},{id:"a16",th:"ว่า",r:"wâa",m:"bahwa"},{id:"a17",th:"ตอบ",r:"dtɔ̀ɔp",m:"menjawab"},{id:"a18",th:"แต่",r:"dtɛ̀ɛ",m:"tetapi"}],
+rangkai:[
+{q:"Aku bisa pergi.",h:"ได้ sesudah kata kerja = bisa",ans:["ฉัน","ไป","ได้"],x:["ไม่"],why:"ได้ setelah kata kerja berarti “bisa”."},
+{q:"Aku tidak bisa pergi.",h:"kata kerja + ไม่ได้",ans:["ฉัน","ไป","ไม่ได้"],x:["ไม่"],why:"“Tidak bisa” = kata kerja + ไม่ได้ (di belakang kata kerja)."},
+{q:"Aku tidak pergi (tidak jadi pergi).",h:"ไม่ได้ + kata kerja",ans:["ฉัน","ไม่ได้","ไป"],x:["ได้"],why:"ไม่ได้ di depan kata kerja = tidak melakukan (peristiwa)."},
+{q:"Aku sempat pergi.",h:"ได้ + kata kerja",ans:["ฉัน","ได้","ไป"],x:["ไม่"],why:"ได้ di depan kata kerja = sempat/berhasil melakukan."},
+{q:"Bisa pergi bersama?",h:"kerja → ด้วยกัน → ได้ → ไหม",ans:["ไป","ด้วยกัน","ได้","ไหม"],x:["กับ"],why:"ไหม selalu paling akhir; ด้วยกัน menempel di belakang kata kerja."},
+{q:"Aku sudah makan nasi.",h:"แล้ว di akhir = sudah",ans:["ฉัน","กิน","ข้าว","แล้ว"],x:["ยัง"],why:"แล้ว di akhir kalimat menandai “sudah”."},
+{q:"Aku belum makan nasi.",h:"ยัง + ไม่ได้ + kata kerja",ans:["ฉัน","ยัง","ไม่ได้","กิน","ข้าว"],x:["แล้ว"],why:"ยัง + ไม่ได้ + kata kerja = belum melakukan."},
+{q:"Aku harus pergi.",h:"ต้อง sebelum kata kerja",ans:["ฉัน","ต้อง","ไป"],x:["อยาก"],why:"ต้อง (harus) berada sebelum kata kerja."},
+{q:"Aku ingin makan nasi.",h:"อยาก sebelum kata kerja",ans:["ฉัน","อยาก","กิน","ข้าว"],x:["ต้อง"],why:"อยาก (ingin) berada sebelum kata kerja."},
+{q:"Aku ingin pergi dengan teman.",h:"กับ + orang",ans:["ฉัน","อยาก","ไป","กับ","เพื่อน"],x:["ด้วยกัน"],why:"กับ + orang = dengan siapa; ด้วยกัน = bersama tanpa menyebut siapa."}],
+read:{title:"Ajakan teman",sents:[
+{t:[["ฉัน","chǎn","aku"],["อยาก","yàak","ingin"],["ไป","bpai","pergi"],["กับ","gàp","dengan"],["เพื่อน","pʉ̂an","teman"]],tr:"Aku ingin pergi dengan teman."},
+{t:[["แต่","dtɛ̀ɛ","tetapi"],["ฉัน","chǎn","aku"],["ยัง","yang","masih"],["ไม่ได้","mâi dâai","tidak (melakukan)"],["กิน","gin","makan"],["ข้าว","kâao","nasi"]],tr:"Tapi aku belum makan nasi."},
+{t:[["เพื่อน","pʉ̂an","teman"],["ถาม","tǎam","bertanya"],["ว่า","wâa","bahwa/apakah"],["ไป","bpai","pergi"],["ด้วยกัน","dûuai-gan","bersama"],["ได้","dâai","bisa"],["ไหม","mǎi","(tanya)"]],tr:"Temanku bertanya apakah bisa pergi bersama."},
+{t:[["ฉัน","chǎn","aku"],["ตอบ","dtɔ̀ɔp","menjawab"],["ว่า","wâa","bahwa"],["ได้","dâai","bisa"]],tr:"Aku menjawab bahwa bisa."}]}}];
+const MAP=[["1 · Kelas kata",["Benda & pronomina","Classifier & angka","Frasa benda (urutan)","Sifat & keterangan","Kata depan & lokasi"]],["2 · Kalimat dasar",["เป็น / คือ / อยู่","มี (punya/ada)"]],["3 · Memodifikasi kata kerja",["Aspek & waktu","Negasi, ได้ & modal"]],["4 · Jenis kalimat",["Ya/tidak & kata tanya","Perintah & อย่า","Partikel akhir"]],["5 · Struktur argumen",["ให้ & penerima","Kausatif","Pasif (ถูก/โดน)","Kata kerja berantai","Perbandingan","กัน / เอง"]],["6 · Kalimat kompleks",["Penghubung","Sebab-akibat & syarat","Klausa ที่","ว่า (ucapan tak langsung)"]],["7 · Register",["Formal vs kasual"]]];
+let S={cards:{},stats:{},rom:1,best:{},units:[]},sess=null;
+try{Object.assign(S,JSON.parse(localStorage.getItem("thai1")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem("thai1",JSON.stringify(S))}catch(e){}};
+const M=document.getElementById("m"),T=document.getElementById("t");
+const mk=(g,c,h)=>{const e=document.createElement(g);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const btn=(t,f,c)=>{const e=mk("button","btn "+(c||""),t);e.onclick=f;return e};
+const sh=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+const today=()=>Math.floor(Date.now()/864e5),INT=[0,1,2,4,8,16,32];
+const units=()=>{const m={};BUILTIN.concat(S.units||[]).forEach(u=>m[u.id]=u);return Object.values(m)};
+const cardsOf=U=>[].concat(...(U||units()).map(u=>(u.cards||[]).map(c=>({...c,u:u.id}))));
+const show=(t,...n)=>{T.textContent=t+(sess?` (${5-sess.length}/5)`:"");M.replaceChildren(...n);scrollTo(0,0)};
+const toast=t=>{const e=document.getElementById("ts");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2800)};
+const say=t=>{try{const s=speechSynthesis,v=s.getVoices(),u=new SpeechSynthesisUtterance(t);u.lang="th-TH";u.rate=.85;const th=v.find(x=>/^th/i.test(x.lang));if(th)u.voice=th;else if(v.length)toast("Suara Thai tidak ditemukan di perangkat ini");s.cancel();s.speak(u)}catch(e){toast("Suara tidak tersedia")}};
+function grade(k,ok,keep){const s=S.cards[k]||(S.cards[k]={b:0,d:0,n:0});s.n++;if(keep)s.d=today()+1;else{s.b=ok?Math.min(s.b+1,6):0;s.d=today()+INT[s.b]}save()}
+function stat(u,ok){const s=S.stats[u]||(S.stats[u]={ok:0,n:0});s.n++;if(ok)s.ok++;save()}
+const nextStep=()=>{if(sess&&sess.length)sess.shift()(units());else home()};
+const none=()=>show("Kosong",mk("div","card","Belum ada materi untuk bagian ini."),btn("Lanjut",nextStep,"pri"));
+document.getElementById("bk").onclick=()=>{sess=null;home()};
+function weak(){let w=null;units().forEach(u=>{const s=S.stats[u.id];if(s&&s.n>=5){const r=s.ok/s.n;if(!w||r<w.r)w={r,u}}});
+ if(!w)return "Belum ada data. Mulai dari Peta Grammar → unit pertama, lalu tekan Mulai sesi.";
+ return w.r<.8?`Perkuat “${w.u.title}”: akurasi ${Math.round(w.r*100)}%. Sesi hari ini mengulang itu dulu.`:"Semua unit di atas 80%. Saatnya impor unit baru."}
+function home(){sess=null;const t=today(),due=cardsOf().filter(c=>S.cards[c.id]&&S.cards[c.id].d<=t).length;
+ const g=mk("div","g");[["🃏 Kartu",kartu],["🧩 Rangkai",rangkai],["📖 Baca",baca],["✍️ Tulis",tulis],["🎤 Bicara",bicara]].forEach(([l,f])=>g.append(btn(l,()=>f(units()))));
+ show("Thai Hub",mk("div","card",`<b>Fokus hari ini</b><p>${weak()}</p><small>${due} kartu jatuh tempo</small>`),btn("▶ Mulai sesi (±25 menit)",()=>{sess=[kartu,rangkai,baca,tulis,bicara];nextStep()},"pri"),g,btn("🗺️ Peta Grammar",peta),btn("⚙️ Pengaturan & backup",setelan))}
+function peta(){const us=units(),n=[];MAP.forEach(([l,ns])=>{n.push(mk("h3","",l));ns.forEach(x=>{const u=us.find(u=>u.node===x),s=u&&S.stats[u.id];
+ let st="belum ada materi",c="";if(u){const r=s&&s.n?s.ok/s.n:0;st=!s||s.n<5?"mulai":r>=.8&&s.n>=10?"dikuasai":"berlatih";c=st=="dikuasai"?"s-g":"s-y"}
+ const b=btn(`${x} <span class="dot ${c}" style="float:right">${st}</span>`,u?()=>unit(u):()=>toast("Materi node ini belum dibuat"));if(!u)b.style.opacity=.55;n.push(b)})});show("Peta Grammar",...n)}
+function unit(u){const n=u.note||{},g=mk("div","g");[["🃏 Kartu",kartu],["🧩 Rangkai",rangkai],["📖 Baca",baca],["✍️ Tulis",tulis],["🎤 Bicara",bicara]].forEach(([l,f])=>g.append(btn(l,()=>f([u]))));
+ show(u.title,mk("div","card",`<b>Fungsi</b><p>${n.f||""}</p><b>Rumus</b><p>${n.r||""}</p><b>Kontras</b><p class="th" style="font-size:1.1em">${n.c||""}</p>`),g)}
+function kartu(U){const A=cardsOf(U),t=today();if(!A.length)return none();
+ let q=sh(A.filter(c=>S.cards[c.id]&&S.cards[c.id].d<=t).concat(A.filter(c=>!S.cards[c.id]).slice(0,8))).slice(0,14),n=0,ok=0;const rq=new Set();
+ if(!q.length)return show("Kartu",mk("div","card","Tidak ada kartu jatuh tempo 🎉"),btn("Lanjut",nextStep,"pri"));
+ (function ask(){if(!q.length)return show("Kartu",mk("div","card",`Selesai: ${ok}/${n} benar.`),btn("Lanjut",nextStep,"pri"));
+ const c=q.shift(),m=Math.random()*3|0,o=sh([c,...sh(A.filter(x=>x.th!==c.th)).slice(0,3)]);
+ const lb=x=>m?`<span class="th">${x.th}</span>`+(S.rom?`<br><small>${x.r}</small>`:""):x.m;
+ const hd=mk("div","card",m==0?`<div class="big">${c.th}</div>`+(S.rom?`<div class="q mut">${c.r}</div>`:""):m==1?`<div class="q">${c.m}</div>`:`<div class="q">🔊 Dengar, pilih kata yang benar</div>`);
+ hd.append(btn("🔊",()=>say(c.th),"s"));const fb=mk("div"),bs=[];
+ o.forEach(x=>{const b=btn(lb(x),()=>{bs.forEach(y=>y.disabled=true);const r=x.th===c.th;b.classList.add(r?"ok":"bad");if(!r)bs[o.indexOf(c)].classList.add("ok");
+  n++;if(r)ok++;grade(c.id,r);stat(c.u,r);if(!r&&!rq.has(c.id)){rq.add(c.id);q.push(c)}
+  fb.append(mk("div","card",`<span class="th">${c.th}</span> <small>${c.r}</small> = ${c.m}`),btn("Lanjut",ask,"pri"));say(c.th)});bs.push(b)});
+ show("Kartu",hd,...bs,fb);if(m==2)say(c.th)})()}
+function rangkai(U){const A=sh([].concat(...(U||units()).map(u=>(u.rangkai||[]).map(r=>({...r,u:u.id}))))).slice(0,6);if(!A.length)return none();let i=0,ok=0;
+ (function go(){if(i>=A.length)return show("Rangkai",mk("div","card",`Selesai: ${ok}/${A.length} benar.`),btn("Lanjut",nextStep,"pri"));
+ const r=A[i++],bank=mk("div","chips"),ans=mk("div","chips"),fb=mk("div");let sel=[];
+ const draw=()=>{bank.replaceChildren();ans.replaceChildren();sh(r.ans.concat(r.x||[])).forEach(()=>0)};
+ const pool=sh(r.ans.concat(r.x||[]).map((w,k)=>({w,k})));
+ const rn=()=>{bank.replaceChildren(...pool.filter(p=>!sel.includes(p)).map(p=>{const c=mk("span","chip",p.w);c.onclick=()=>{sel.push(p);rn()};return c}));ans.replaceChildren(...sel.map(p=>{const c=mk("span","chip",p.w);c.onclick=()=>{sel=sel.filter(x=>x!==p);rn()};return c}))};rn();
+ const chk=btn("Periksa",()=>{const g=sel.map(p=>p.w).join("|")===r.ans.join("|");chk.remove();ans.classList.add(g?"ok":"bad");if(g)ok++;stat(r.u,g);
+  fb.append(mk("div","card",`${g?"✅ Benar":"❌ Jawaban:"} <span class="th">${r.ans.join(" ")}</span><br><small>${r.why||""}</small>`),btn("🔊",()=>say(r.ans.join("")),"s"),btn("Lanjut",go,"pri"))},"pri");
+ show("Rangkai",mk("div","card",`<div class="q">${r.q}</div><small>Rumus: ${r.h||""}</small>`),ans,bank,chk,fb)})()}
+function baca(U){const us=(U||units()).filter(u=>u.read);if(!us.length)return none();const u=us[(S.ri=(S.ri||0)+1)%us.length],r=u.read;save();let tr=0,t0=0;
+ const box=mk("div"),sheet=document.getElementById("sh"),tm=mk("div","mut","");
+ const rn=()=>{box.replaceChildren(...r.sents.map(s=>{const d=mk("div","card");const l=mk("div","th");s.t.forEach(w=>{const k=mk("span","tk",w[0]+(S.rom?`<small>${w[1]}</small>`:""));k.onclick=()=>{sheet.innerHTML=`<span class="th">${w[0]}</span> <small>${w[1]}</small><br>${w[2]}<br>`;sheet.append(btn("🔊",()=>say(w[0]),"s"),btn("Tutup",()=>sheet.style.display="none","s"));sheet.style.display="block"};l.append(k)});d.append(l,btn("🔊",()=>say(s.t.map(w=>w[0]).join("")),"s"));if(tr)d.append(mk("div","mut",s.tr));return d}))};rn();
+ const tb=btn("⏱ Mulai baca",()=>{if(!t0){t0=Date.now();tb.textContent="⏹ Selesai"}else{const s=Math.round((Date.now()-t0)/1e3),k=u.id,b=S.best[k];t0=0;tb.textContent="⏱ Baca lagi";S.best[k]=b?Math.min(b,s):s;save();tm.textContent=`Waktu: ${s} dtk · terbaik: ${S.best[k]} dtk`}},"s");
+ show(r.title,mk("small","","Ketuk kata untuk artinya."),mk("div","",""),tb,btn("Romanisasi "+(S.rom?"ON":"OFF"),()=>{S.rom=!S.rom;save();rn()},"s"),btn("Terjemahan",()=>{tr=!tr;rn()},"s"),tm,box,btn("Lanjut",()=>{sheet.style.display="none";nextStep()},"pri"))}
+function tulis(U){const A=cardsOf(U).filter(c=>c.th.length<=8),t=today();if(!A.length)return none();
+ const q=sh(A.filter(c=>{const s=S.cards[c.id+"|w"];return!s||s.d<=t})).slice(0,5);if(!q.length)return show("Tulis",mk("div","card","Tidak ada yang jatuh tempo 🎉"),btn("Lanjut",nextStep,"pri"));let n=0;
+ (function go(){if(!q.length)return show("Tulis",mk("div","card","Selesai menulis."),btn("Lanjut",nextStep,"pri"));
+ const c=q.shift(),k=c.id+"|w",pd=mk("div","pad"),cv=mk("canvas");cv.id="cv";const gh=mk("div","gh",c.th);gh.style.display="none";pd.append(cv,gh);const fb=mk("div");
+ show("Tulis",mk("div","card",`<div class="q">${c.m}</div>`),pd);const x=cv.getContext("2d"),r=cv.getBoundingClientRect(),d=devicePixelRatio||1;cv.width=r.width*d;cv.height=r.height*d;x.scale(d,d);x.lineWidth=4;x.lineCap=x.lineJoin="round";x.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue("--fg").trim()||"#000";let dn=0;
+ cv.onpointerdown=e=>{dn=1;cv.setPointerCapture(e.pointerId);x.beginPath();x.moveTo(e.offsetX,e.offsetY)};cv.onpointermove=e=>{if(dn){x.lineTo(e.offsetX,e.offsetY);x.stroke()}};cv.onpointerup=cv.onpointercancel=()=>dn=0;
+ const rv=btn("Lihat jawaban",()=>{rv.remove();gh.style.display="flex";say(c.th);fb.append(mk("div","card",`<span class="th">${c.th}</span> <small>${c.r}</small>`),btn("✅ Benar",()=>{grade(k,1);stat(c.u,1);go()}),btn("🤏 Hampir",()=>{grade(k,0,1);stat(c.u,0);go()}),btn("❌ Salah",()=>{grade(k,0);stat(c.u,0);q.push(c);go()}))},"pri");
+ M.append(btn("Hapus",()=>x.clearRect(0,0,9999,9999),"s"),btn("🔊",()=>say(c.th),"s"),rv,fb)})()}
+function bicara(U){const ss=[].concat(...(U||units()).filter(u=>u.read).map(u=>u.read.sents)).slice(0,5);if(!ss.length)return none();const n=[mk("small","","Dengar → ulangi bersamaan → rekam → bandingkan.")];
+ ss.forEach(s=>{const th=s.t.map(w=>w[0]).join(""),c=mk("div","card",`<div class="th">${s.t.map(w=>w[0]).join(" ")}</div><small>${S.rom?s.t.map(w=>w[1]).join(" "):""}</small><br><small>${s.tr}</small><br>`);let url=null,mr=null;
+ const pl=btn("▶ Rekamanku",()=>url?new Audio(url).play():toast("Belum ada rekaman"),"s"),rc=btn("● Rekam",async()=>{if(mr&&mr.state=="recording"){mr.stop();return}
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true}),ch=[];mr=new MediaRecorder(st);mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{st.getTracks().forEach(t=>t.stop());url=URL.createObjectURL(new Blob(ch,{type:mr.mimeType}));rc.textContent="● Rekam"};mr.start();rc.textContent="■ Stop"}catch(e){toast("Mikrofon tidak bisa diakses di mode ini")}},"s");
+ c.append(btn("🔊 Dengar",()=>say(th),"s"),rc,pl);n.push(c)});show("Bicara",...n,btn("Selesai",nextStep,"pri"))}
+function setelan(){const a=mk("textarea"),b=mk("textarea");a.placeholder='{"units":[{"id":"u2","node":"...","title":"...","note":{"f":"","r":"","c":""},"cards":[{"id":"","th":"","r":"","m":""}],"rangkai":[{"q":"","h":"","ans":[],"x":[],"why":""}],"read":{"title":"","sents":[{"t":[["th","rom","arti"]],"tr":""}]}}]}';
+ const imp=btn("Impor konten",()=>{try{let j=JSON.parse(a.value);j=j.units||j;S.units=(S.units||[]).concat(j);save();toast(j.length+" unit diimpor")}catch(e){toast("JSON tidak valid")}},"s");
+ const f=mk("input");f.type="file";f.accept=".json";f.onchange=()=>{const r=new FileReader();r.onload=()=>a.value=r.result;r.readAsText(f.files[0])};
+ show("Pengaturan",btn("Romanisasi: "+(S.rom?"ON":"OFF")+" (ketuk untuk ganti)",()=>{S.rom=!S.rom;save();setelan()}),mk("h3","","Impor konten"),a,f,imp,mk("h3","","Backup progres"),mk("small","","Progres tersimpan hanya di browser perangkat ini. Salin teks ini untuk backup / pindah perangkat."),b,
+ btn("Ekspor",()=>{b.value=JSON.stringify(S);b.select();try{navigator.clipboard.writeText(b.value)}catch(e){}},"s"),btn("Impor progres",()=>{try{Object.assign(S,JSON.parse(b.value));save();toast("Progres dipulihkan")}catch(e){toast("JSON tidak valid")}},"s"))}
+home();
+</script></body></html>
